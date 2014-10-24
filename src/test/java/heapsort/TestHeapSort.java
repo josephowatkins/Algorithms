@@ -1,27 +1,26 @@
 package heapsort;
 
+import junitparams.JUnitParamsRunner;
+import junitparams.Parameters;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Random;
 import java.util.stream.Stream;
 
-@RunWith(Parameterized.class)
+@RunWith(JUnitParamsRunner.class)
 public class TestHeapSort {
 
-    private Integer[] arrayToSort;
+    private static final int NUMBER_OF_ARRAYS_TO_TEST = 10;
+    private static final int LENGTH_OF_ARRAY = 10000;
+
+
     private HeapSort underTest = new HeapSort();
 
-    public TestHeapSort(Integer[] arrayToSort) {
-        this.arrayToSort = arrayToSort;
-    }
-
     @Test
-    public void testHeapSort() {
+    @Parameters(method = "getData")
+    public void testHeapSort(Integer[] arrayToSort) {
 
         // sort array in position
         underTest.sort(arrayToSort);
@@ -31,20 +30,18 @@ public class TestHeapSort {
         }
     }
 
-    @Parameterized.Parameters
-    public static Collection<Object[]> data() {
-        return Arrays.asList(new Object[][] {
-                {getRandomIntegerArray()},
-                {getRandomIntegerArray()},
-                {getRandomIntegerArray()},
-                {getRandomIntegerArray()},
-                {getRandomIntegerArray()}
-        });
+    private static Object[] getData() {
+        Object[] o = new Object[NUMBER_OF_ARRAYS_TO_TEST];
+
+        for (int i = 0; i < o.length; i++) {
+            o[i] = new Object[]{createRandomIntArray()};
+        }
+        return o;
     }
 
-    private static Integer[] getRandomIntegerArray() {
+    private static Integer[] createRandomIntArray() {
         Random random = new Random();
         return Stream.generate(() -> random.nextInt(10000))
-                .limit(10000).toArray(Integer[]::new);
+                .limit(LENGTH_OF_ARRAY).toArray(Integer[]::new);
     }
 }
