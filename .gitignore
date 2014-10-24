@@ -18,7 +18,6 @@ Thumbs.db
 *.war
 *.ear
 *.ser
-ShutdownTest.java
 
 
 # IntelliJ IDEA #
@@ -26,9 +25,13 @@ ShutdownTest.java
 
 workspace.xml
 tasks.xml
-/bin
-gradlew
-gradlew.bat
+
 *.iml
 .idea
 
+# Gradle Files #
+################
+gradlew
+gradlew.bat
+.gradle/
+/bin
